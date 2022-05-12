@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.swen.blog.entity.Post;
 import com.swen.blog.exception.PostDto;
+import com.swen.blog.exception.ResourceNotFoundException;
 import com.swen.blog.repository.PostRepository;
 import com.swen.blog.service.PostService;
 
@@ -50,6 +51,36 @@ public class PostServiceImpl implements PostService {
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
         return post;
+    }
+
+    @Override
+    public PostDto getPostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("Post", "id", id)
+        );
+        return mapToDto(post);
+    }
+
+    @Override
+    public PostDto updatePostById(PostDto postDto, long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("Post", "id", id)
+        );
+
+        post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
+        post.setContent(postDto.getContent());
+
+        Post updatedPost = postRepository.save(post);
+        return mapToDto(updatedPost);
+    }
+
+    @Override
+    public void deletePostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException("Post", "id", id)
+        );
+        postRepository.delete(post);
     }
     
 }
