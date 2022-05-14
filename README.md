@@ -11,7 +11,7 @@
 | POST        | /api/posts                                      | 201         | Create a new post            | ✔      |
 | PUT         | /api/posts/{id}                                 | 200         | Update an exisitng post      | ✔      |
 | DELETE      | /api/posts/{id}                                 | 200         | Delete post by ID            | ✔      |
-| GET         | /api/posts?pageSize=5&pageNo=1&sortBy=firstName | 200         | Paginating and sorting posts |        |
+| GET         | /api/posts?pageSize=5&pageNo=1&sortBy=firstName | 200         | Paginating and sorting posts | ✔      |
 
 #### Comments
 
