@@ -1,8 +1,7 @@
 package com.swen.blog.controller;
 
-import java.util.List;
-
-import com.swen.blog.exception.PostDto;
+import com.swen.blog.payload.PostDto;
+import com.swen.blog.payload.PostResponse;
 import com.swen.blog.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
 public class PostController {
+
+    private static final String DEFAULT_PAGE_NUMBER = "0";
+    private static final String DEFAULT_PAGE_SIZE = "10";
+    private static final String DEFAULT_SORT_BY = "id";
+    private static final String DEFAULT_SORT_DIR = "asc";
+
     
     private PostService postService;
 
@@ -35,8 +41,13 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<PostDto> getAllPosts() {
-        return postService.getAllPosts();
+    public PostResponse getAllPosts(
+        @RequestParam(value = "pageNo", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,
+        @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
+        @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIR, required = false) String sortDir
+        ) {
+        return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
     @GetMapping("/posts/{id}")

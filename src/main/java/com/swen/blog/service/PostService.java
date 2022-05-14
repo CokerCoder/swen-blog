@@ -1,13 +1,12 @@
 package com.swen.blog.service;
 
-import java.util.List;
-
-import com.swen.blog.exception.PostDto;
+import com.swen.blog.payload.PostDto;
+import com.swen.blog.payload.PostResponse;
 
 public interface PostService {
     PostDto createPost(PostDto PostDto);
 
-    List<PostDto> getAllPosts();
+    PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir);
 
     PostDto getPostById(long id);
 
