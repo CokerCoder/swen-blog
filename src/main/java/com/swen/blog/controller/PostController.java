@@ -1,5 +1,7 @@
 package com.swen.blog.controller;
 
+import javax.validation.Valid;
+
 import com.swen.blog.payload.PostDto;
 import com.swen.blog.payload.PostResponse;
 import com.swen.blog.service.PostService;
@@ -36,7 +38,7 @@ public class PostController {
 
     // create blog post REST API
     @PostMapping("/posts")
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
@@ -56,7 +58,7 @@ public class PostController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto, @PathVariable("id") long id) {
+    public ResponseEntity<PostDto> updatePostById(@Valid @RequestBody PostDto postDto, @PathVariable("id") long id) {
         return ResponseEntity.ok(postService.updatePostById(postDto, id));
     }
 
